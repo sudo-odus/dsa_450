@@ -1,0 +1,73 @@
+void swap(int *a,int *b)
+{
+    int temp = *a;
+    *b=*a;
+    *a= temp;
+    
+}
+
+void partition(Node *low , Node *high,Node **pivot,Node **prev)
+{   
+    int pivot=high->data;
+    Node *itr=low; //for iteration
+    Node *ipsc=low;                  //isse pehle sab chote
+    while(itr->next!=high)
+    {
+        if(itr->data<pivot)
+        {
+            ipsc=ipsc->next;
+            swap(ipsc->data,itr->data);
+        }
+        
+        // ek or dikkat agr bda numberwa
+        itr=itr->next;
+    }
+    *prev=ipsc;                 //high for the left partition
+    ipsc=ipsc->next;
+    *pivot=ipsc;                //pivot element
+    swap(ipsc->data,high->data);
+    
+    // abhi to swap bhi ni likha
+    
+}
+
+Node * calHigh(Node * root)
+{
+    while(root->next!=NULL)
+    {
+        root=root->next;
+    }
+    return(root);
+}
+
+//you have to complete this function
+void quickSort(struct node **headRef) {
+    
+    // first of all i will have to draw the skeleton for the program
+    // lets use low and high for now
+    // using the first node as pivot will be more beneficial
+    
+    // write a function to calculate high
+    Node *low=*headRef;
+    Node *high=calhigh(*headRef);
+    
+    
+    Node **pivot=NULL;
+    Node **prev=NULL;
+    partition(low,high,pivot,prev);                     
+    // the function will return the pivot and prev of the list
+    // now call quicksort for both the partitions
+    *prev->next=NULL;
+    Node *second=*pivot->next;
+    quickSort(&low);                         //but how will i get high for this sub-linked list
+    quickSort(&second);
+    *prev->next=*pivot;
+    
+    // ya to esa kre ki alg krke pass kre phr baad me link krde....
+    // dekho deal to direct data se krenge to easy hoga...kyuki links ni change krni hogi
+    
+    
+    // chalo main code ko to set krdie 
+    // ab partition wala code likhte hai
+    
+}

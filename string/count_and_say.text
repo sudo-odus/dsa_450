@@ -1,0 +1,45 @@
+class Solution
+{
+public:
+    string say(string s)
+    {
+
+        string sol = "";
+        int i = 1;
+        int count = 1;
+        // string counts;
+        while (s[i])
+        {
+            if (s[i] != s[i - 1])
+            {
+                string counts = to_string(count);
+                sol.append(counts);
+                // string may=s[i-1];
+                // sol.append(may);
+                // strncat(sol,&s[i-1],1)
+                sol.push_back(s[i - 1]);
+                count = 1;
+            }
+            else
+            {
+                count++;
+            }
+            i++;
+        }
+        string counts = to_string(count);
+        sol.append(counts);
+        sol.push_back(s[i - 1]);
+        return (sol);
+    }
+    string countAndSay(int n)
+    {
+        if (n == 1)
+            return ("1");
+
+        return (say(countAndSay(n - 1)));
+        // string s=to_string(n);
+        // string ans=say(s);
+        // // cout<<ans;
+        // return(ans);
+    }
+};

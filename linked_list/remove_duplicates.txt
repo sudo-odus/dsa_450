@@ -1,0 +1,27 @@
+Node *removeDuplicates(Node *head)
+{
+ // your code goes here
+//  we will use hashing to find for the duplicate
+// then remove it
+    set <int> nodes;
+    Node *header = head;
+    Node *prev = head;
+    nodes.insert(head->data);
+    header=header->next;
+    while(header!=NULL)
+    {   
+        if(nodes.find(header->data)!=nodes.end())
+        {
+            // meaning the node is duplicate
+            prev->next=header->next;
+            header=header->next;
+        }
+        else
+        {
+            nodes.insert(header->data);
+            prev=header;
+            header=header->next;
+        }
+    }
+    return(head);
+}

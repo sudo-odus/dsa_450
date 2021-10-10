@@ -1,0 +1,87 @@
+class Solution
+{
+    public:
+    Node * reverse(Node *head)
+    {
+        Node * curr =head;
+        Node * prev =NULL;
+        Node * nexti =NULL;
+        while(curr!=NULL)
+        {
+            nexti=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=nexti;
+        }
+        head=prev;
+        return head;
+        
+    }
+    Node* addOne(Node *head) 
+    {   
+        head=reverse(head);
+        Node *ptr = head;
+        // handling a single number
+        if(head->next==NULL)
+        {
+            if(head->data==9)
+            {
+                head->data=0;
+                Node *n = new Node(1);
+                head->next=n;
+                
+            }
+            else
+                head->data+=1;
+            head=reverse(ptr);
+            return(head);
+        }
+        
+        int carry=0;
+        if(ptr->data<9)
+            ptr->data+=1;
+        else
+        {   
+            ptr->data=0;
+            carry=1;
+            ptr=ptr->next;
+            while(carry==1&& ptr->next!=NULL )
+            {
+                ptr->data+=1;
+                if(ptr->data==10)
+                {
+                    carry=1;
+                    ptr->data=0;
+                }
+                else
+                {
+                    carry=0;
+                }
+                ptr=ptr->next;
+            }
+            
+            // handling last digit
+            if(carry==1 && ptr->next==NULL)
+            {   
+                if(ptr->data==9)
+                {
+                    ptr->data=0;
+                    Node *n = new Node(1);
+                    ptr->next=n;
+                }
+                else
+                {
+                    ptr->data+=1;
+                }
+            }
+        }
+        
+        head=reverse(head);
+        
+        return(head);
+        
+        
+        
+        
+    }
+};

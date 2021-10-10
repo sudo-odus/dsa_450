@@ -1,0 +1,96 @@
+class Solution
+{
+    public:
+    //Function to add two numbers represented by linked list.
+    Node * reverse(Node * head)
+    {
+        Node * curr=head;
+        Node * prev=NULL;
+        Node * nxt=NULL;
+        while(curr!=NULL)
+        {
+            nxt=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=nxt;
+        }
+        return(prev);
+    }
+    struct Node* addTwoLists(struct Node* first, struct Node* second)
+    {
+        // code here
+        Node * head1reversed = reverse(first);
+        Node * head2reversed = reverse(second);
+        // now as both the lists are reversed i just need to add them
+        // like i did the addition in adding 1
+        // take care of the carry and do the addition
+        // and also take care of lists with different lists;
+        // i will be adding the result in one of the list
+        // so i wont have to recreate a list
+        Node *curr1 = head1reversed;
+        Node *curr2 = head2reversed;
+        Node *prev1 = NULL;
+        Node *prev2 = NULL;
+        int carry = 0; 
+        int sum = 0;
+        while(curr1!=NULL && curr2!=NULL)
+        {
+            sum = curr1->data+curr2->data+carry;
+            carry = (sum>=10)?1:0;
+            // sum=sum%10;
+            curr1->data = sum%10;
+            
+            prev1=curr1;
+            curr1=curr1->next;
+            prev2=curr2;
+            curr2=curr2->next;
+            
+            
+        }
+        if(curr2!=NULL)
+        {   
+            prev1->next=curr2;
+            if(carry==1)
+            {
+                // use while again here
+                while(curr2!=NULL)
+                {
+                    sum = curr2->data+carry;
+                    // carry = 0; 
+                    carry = (sum>=10)?1:0;
+                    curr2->data = sum%10;// (sum>=10)?0:sum;
+                    prev1 = curr2;
+                    curr2 = curr2->next;
+                }
+                
+            }
+        }
+        if(curr1!=NULL and carry==1)
+        {
+            // i have to repeat the loop if all next are 9
+            while(curr1!=NULL)
+            {
+                sum = curr1->data+carry;
+                // carry = 0; 
+                carry = (sum>=10)?1:0;
+                curr1->data = sum%10;  //(sum>=10)?0:sum;
+                prev1 = curr1;
+                curr1 = curr1->next;
+            }
+            
+        }
+        // now a condition if both become null and carry is still there
+        // adding a node
+        if(curr1==NULL && curr2==NULL && carry==1)
+        {
+            Node * n = new Node(1);
+            prev1->next=n;
+            
+        }
+        
+        Node *ans = reverse(head1reversed);
+        
+        return(ans);
+        
+    }
+};
